@@ -34,5 +34,5 @@ export default function renderToString(
     debug: true,
   } as any)
 
-  return stream.get()
+  return stream.get().replace(/\n/g, '\r\n')
 }
