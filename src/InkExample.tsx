@@ -14,7 +14,7 @@ const items = [
 
 export function InkExample() {
   return (
-    <Box>
+    <Box flexDirection="column">
       <Text bold>Select the database you want to use</Text>
       <Text>Learn how to set up a MySQL database: prisma.io/docs</Text>
       <Spinner />

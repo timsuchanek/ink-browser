@@ -1,14 +1,16 @@
 import { render } from 'ink'
+import EventEmitter from 'eventemitter3'
 
 export interface StreamOptions {
   columns?: number
 }
 
 // Fake process.stdout
-export class Stream {
+export class Stdout extends EventEmitter {
   output: string
   columns: number
   constructor({ columns }: StreamOptions) {
+    super()
     this.output = ''
     this.columns = columns || 100
   }
@@ -17,22 +19,39 @@ export class Stream {
     this.output = str
   }
 
-  get() {
-    return this.output
+  toString() {
+    return this.output.replace(/\n/g, '\r\n')
   }
+}
+
+export class Stdin extends EventEmitter<any> {
+  readonly readableHighWaterMark: number = 1000
+  readonly readableLength: number = 10000
+  isRaw?: boolean = true
+  isTTY: boolean = true
+  _read(size: number) {}
+  _destroy(err: Error | null, callback: (err?: null | Error) => void) {}
+  setRawMode(mode: boolean) {}
+  push(chunk: any, encoding?: string) {
+    return true
+  }
+  destroy(error?: Error) {}
+  setEncoding(env: any) {}
+  resume() {}
 }
 
 export default function renderToString(
   node: any,
   { columns }: StreamOptions = {},
 ) {
-  const stream = new Stream({ columns })
+  const stdout = new Stdout({ columns })
+  const stdin = new Stdin()
 
   render(node, {
-    stdout: stream,
-    stdin: {},
+    stdout,
+    stdin,
     debug: true,
   } as any)
 
-  return stream.get().replace(/\n/g, '\r\n')
+  return String(stdout)
 }
