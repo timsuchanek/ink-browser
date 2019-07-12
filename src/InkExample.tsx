@@ -1,20 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Box, Text } from 'ink'
+import Spinner from 'ink-spinner';
+import SelectInput from 'ink-select-input';
 
-import { Color, Box } from 'ink'
+const handleSelect = () => {}
+
+const items = [
+  { label: 'SQLite', value: 'sqlite'},
+  { label: 'MySQL', value: 'mysql'},
+  { label: 'PostgreSQL', value: 'postgresql'}
+]
+
 
 export function InkExample() {
   return (
-    <Box justifyContent="space-between" width="50">
-      <Box flexDirection="column">
-        <Color greenBright>Hello World</Color>
-        <Color green>Hello World</Color>
-        <Color red>Normal text</Color>
-      </Box>
-      <Box flexDirection="column">
-        <Color greenBright>Hello World</Color>
-        <Color green>Hello World</Color>
-        <Color red>Normal text</Color>
-      </Box>
+    <Box>
+      <Text bold>Select the database you want to use</Text>
+      <Text>Learn how to set up a MySQL database: prisma.io/docs</Text>
+      <Spinner />
+      <SelectInput items={items} onSelect={handleSelect}/>
     </Box>
   )
 }
