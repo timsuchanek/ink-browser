@@ -1,8 +1,10 @@
 import { render } from 'ink'
 import EventEmitter from 'eventemitter3'
+import { Terminal } from 'xterm'
 
 export interface StreamOptions {
   columns?: number
+  terminal?: Terminal
 }
 
 // Fake process.stdout
@@ -16,7 +18,9 @@ export class Stdout extends EventEmitter {
   }
 
   write(str: string) {
-    this.output = str
+    const sanitized = str.replace(/\n/g, '\r\n')
+    this.emit('data', sanitized)
+    this.output = sanitized
   }
 
   toString() {
@@ -33,6 +37,7 @@ export class Stdin extends EventEmitter<any> {
   _destroy(err: Error | null, callback: (err?: null | Error) => void) {}
   setRawMode(mode: boolean) {}
   push(chunk: any, encoding?: string) {
+    this.emit('data', chunk)
     return true
   }
   destroy(error?: Error) {}
@@ -42,7 +47,8 @@ export class Stdin extends EventEmitter<any> {
 
 export default function renderToString(
   node: any,
-  { columns }: StreamOptions = {},
+  { columns, terminal }: StreamOptions = {},
+  cb: (result: string) => any,
 ) {
   const stdout = new Stdout({ columns })
   const stdin = new Stdin()
@@ -53,5 +59,15 @@ export default function renderToString(
     debug: true,
   } as any)
 
-  return String(stdout)
+  if (terminal) {
+    terminal.on('key', key => {
+      stdin.push(key)
+    })
+  }
+
+  stdout.on('data', data => {
+    cb(data)
+  })
+
+  cb(String(stdout))
 }
