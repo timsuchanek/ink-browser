@@ -135,7 +135,7 @@ export function InkExample() {
         <Divider />
       </Box>
 
-      <Box marginBottom={10}>
+      <Box>
         <Box width={40}>
           <SelectInput
             items={[{ label: 'Create new SQLite file', value: 'new-sqlite' }, { label: 'Use existing SQLite file', value: 'existing-sqlite' }]}
@@ -149,6 +149,14 @@ export function InkExample() {
         </Box>
       </Box>
 
+      <Divider />
+
+      <Box marginBottom={10}>
+        <Color gray>❮ </Color>
+        <Text bold>Back</Text>
+        <Color gray> (Database selection)</Color>
+      </Box>
+
 
 
       <Box flexDirection="column">
@@ -156,7 +164,7 @@ export function InkExample() {
         <Divider />
       </Box>
 
-      <Box marginBottom={10}>
+      <Box>
         <Box width={40} flexDirection="column">
           <SelectInput
             items={[{ label: 'JavaScript', value: 'javascript' }, { label: 'TypeScript', value: 'typescript' }]}
@@ -167,6 +175,14 @@ export function InkExample() {
         </Box>
       </Box>
 
+      <Divider />
+
+      <Box marginBottom={10}>
+        <Color gray>❮ </Color>
+        <Text bold>Back</Text>
+        <Color gray> (Tool selection)</Color>
+      </Box>
+
 
 
       <Box flexDirection="column">
@@ -174,7 +190,7 @@ export function InkExample() {
         <Divider />
       </Box>
 
-      <Box marginBottom={10}>
+      <Box>
         <Box width={30}>
           <SelectInput
             items={[{ label: 'Basic boilerplate', value: 'basic' }, { label: 'GraphQL boilerplate', value: 'graphql' }, { label: 'REST boilerplate', value: 'rest' }, { label: 'gRPC boilerplate', value: 'grpc' }]}
@@ -190,13 +206,30 @@ export function InkExample() {
         </Box>
       </Box>
 
+      <Divider />
+
+      <Box marginBottom={10}>
+        <Color gray>❮ </Color>
+        <Text bold>Back</Text>
+        <Color gray> (Language selection)</Color>
+      </Box>
+
 
 
       <Box flexDirection="column">
         <Text bold>Enter MySQL credentials</Text>
         <Color white>Learn how to set up a MySQL database: <Text underline>prisma.io/docs</Text></Color>
-        <Divider />
       </Box>
+
+      <Divider />
+
+      <Text bold>We found a local MySQL database on port 3306. Do you want to use this database?</Text>
+      <Box>
+        <Color gray>{figures.pointer} </Color>
+        <Text>Yes, autofill credentials of local MySQL database</Text>
+      </Box>
+
+      <Divider />
 
       <Box flexDirection="column">
         <Box marginLeft={2}>
@@ -240,6 +273,16 @@ export function InkExample() {
       </Box>
 
       <Divider />
+
+      <Box>
+        <Color gray>{figures.pointer} </Color>
+        <Text bold>Connect</Text>
+      </Box>
+      <Box>
+        <Color gray>❮ </Color>
+        <Text bold>Back</Text>
+        <Color gray> (Database selection)</Color>
+      </Box>
 
       {/* <MultiSelect
         items={tools}
